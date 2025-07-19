@@ -7,15 +7,6 @@
 // Scripts
 // 
 
-        // Nonaktifkan klik kanan di seluruh halaman
-        document.addEventListener('contextmenu', function (e) {
-            e.preventDefault();
-        });
-        document.addEventListener('copy', (e) => e.preventDefault());
-        document.addEventListener('paste', (e) => e.preventDefault());
-        document.addEventListener('cut', (e) => e.preventDefault());
-
-
 window.addEventListener('DOMContentLoaded', event => {
 
     // Toggle the side navigation
