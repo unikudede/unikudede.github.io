@@ -176,6 +176,16 @@
     <script src="js/datatables-simple-demo.js"></script>
 
     <script>
+
+        // Nonaktifkan klik kanan di seluruh halaman
+        document.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+        document.addEventListener('copy', (e) => e.preventDefault());
+        document.addEventListener('paste', (e) => e.preventDefault());
+        document.addEventListener('cut', (e) => e.preventDefault());
+
+        
         document.getElementById('usr').textContent = getCookies()[1];
         let nim = getCookies()[0];
         const tableBody = document.querySelector("#datatablesSimple tbody");
