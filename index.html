@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Mahasiswa - Bimbingan</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f6f9;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hide {
+            display: none !important;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        /* Login Card */
+        .login-card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-bg {
+            background: linear-gradient(135deg, #0d6efd, #0a58ca);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        /* Dashboard Elements */
+        .status-card {
+            transition: transform 0.2s;
+            border: none;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader" class="loading-overlay">
+        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+        <div class="mt-2 fw-bold text-secondary">Memproses...</div>
+    </div>
+
+    <div id="sectionLogin" class="container d-flex align-items-center justify-content-center"
+        style="min-height: 100vh;">
+        <div class="card login-card" style="width: 400px;">
+            <div class="header-bg text-center">
+                <i class="fas fa-user-graduate fa-3x mb-3"></i>
+                <h4>Portal Mahasiswa</h4>
+                <p class="mb-0 opacity-75">Silakan login untuk memulai</p>
+            </div>
+            <div class="card-body p-4">
+                <form id="formLogin">
+                    <div class="form-floating mb-3">
+                        <input type="text" id="nim" class="form-control" placeholder="NIM" required>
+                        <label>NIM</label>
+                    </div>
+                    <div class="form-floating mb-4">
+                        <input type="password" id="pass" class="form-control" placeholder="Password" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill">Masuk</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper" class="hide">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow mb-4">
+            <div class="container">
+                <a class="navbar-brand fw-bold" href="#"><i class="fas fa-graduation-cap me-2"></i>Dashboard</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul class="navbar-nav align-items-center">
+                        <li class="nav-item text-white me-3 text-end d-none d-lg-block">
+                            <div class="fw-bold" id="navNama">Mahasiswa</div>
+                            <small class="opacity-75" id="navNim">NIM</small>
+                        </li>
+                        <li class="nav-item me-2">
+                            <button onclick="bukaModalPassword()" class="btn btn-outline-light btn-sm rounded-pill">
+                                <i class="fas fa-key me-1"></i> Ganti Password
+                            </button>
+                        </li>
+                        <li class="nav-item">
+                            <button onclick="logout()" class="btn btn-danger btn-sm rounded-pill ms-2">
+                                <i class="fas fa-sign-out-alt me-1"></i> Logout
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <div class="row g-3 mb-4">
+                <div class="col-md-8">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold text-primary">👋 Selamat Datang!</h5>
+                            <p class="text-muted">Gunakan formulir di bawah ini untuk mengirimkan progres skripsi atau
+                                revisi kepada dosen pembimbing Anda.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card status-card bg-primary text-white h-100 text-center p-3 shadow-sm">
+                        <h2 class="fw-bold mb-0" id="statTotal">0</h2>
+                        <small>Total Bimbingan</small>
+                    </div>
+                </div>
+                <div class="col-md-2 col-6">
+                    <div class="card status-card bg-info text-white h-100 text-center p-3 shadow-sm">
+                        <h6 class="fw-bold mb-1 mt-2" id="statStatus">-</h6>
+                        <small>Status Terakhir</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card shadow-sm border-0">
+                        <div class="card-header bg-white fw-bold py-3">
+                            <i class="fas fa-paper-plane me-2 text-primary"></i>Kirim Bimbingan Baru
+                        </div>
+                        <div class="card-body">
+                            <form id="formInput">
+
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Tahapan / Bab</label>
+                                    <select id="topik" class="form-select" required>
+                                        <option value="" disabled selected>-- Pilih Tahapan --</option>
+                                        <option value="Judul / Outline">Pengajuan Judul / Outline</option>
+                                        <option value="Proposal">Seminar Proposal</option>
+                                        <option value="Bab 1">Bab 1</option>
+                                        <option value="Bab 2">Bab 2</option>
+                                        <option value="Bab 3">Bab 3</option>
+                                        <option value="Bab 4">Bab 4</option>
+                                        <option value="Bab 5">Bab 5</option>
+                                        <option value="Naskah Lengkap">Revisi Naskah Lengkap</option>
+                                        <option value="Lainnya">Lainnya (Jelaskan di Catatan)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Catatan untuk Dosen</label>
+                                    <textarea id="catatan" class="form-control" rows="4"
+                                        placeholder="Jelaskan detail progress atau revisi yang dilakukan..."
+                                        required></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">File Dokumen (PDF/Word)</label>
+                                    <input type="file" id="fileUpload" class="form-control">
+                                    <small class="text-muted" style="font-size: 11px;">Maksimal 2MB</small>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100 fw-bold">
+                                    <i class="fas fa-upload me-2"></i>Kirim Data
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0">
+                        <div
+                            class="card-header bg-white fw-bold py-3 d-flex justify-content-between align-items-center">
+                            <span><i class="fas fa-history me-2 text-primary"></i>Riwayat Bimbingan</span>
+                            <button class="btn btn-sm btn-light border" onclick="loadRiwayat()"><i
+                                    class="fas fa-sync-alt"></i></button>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0 align-middle">
+                                    <thead class="table-light small text-muted">
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Topik</th>
+                                            <th class="text-center">File</th>
+                                            <th>Balasan Dosen</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tabelBody" class="small">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPassword" tabindex="-1">
+        <div class="modal-dialog modal-sm modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-key me-2"></i>Ganti Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="formGantiPass">
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Password Lama</label>
+                            <input type="password" id="oldPassInput" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Password Baru</label>
+                            <input type="password" id="newPassInput" class="form-control" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Konfirmasi Password Baru</label>
+                            <input type="password" id="confPassInput" class="form-control" required>
+                            <div id="msgPass" class="text-danger small mt-1"></div>
+                        </div>
+                        <button type="submit" class="btn btn-warning w-100 fw-bold">Simpan Perubahan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ==========================================
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzxx3Y1IlmLGdLQDPNW7ZaAKZnMo-lgYX1EY0XhrixNbGK33kYym7s4lBGxFxOPjQLL/exec";
+        // ==========================================
+
+        let currentUser = null;
+        let modalPassInstance;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            modalPassInstance = new bootstrap.Modal(document.getElementById('modalPassword'));
+            cekSesi();
+        });
+
+        // --- AUTH & SESSION ---
+        function cekSesi() {
+            const sesi = localStorage.getItem('sesi_mahasiswa');
+            if (sesi) {
+                currentUser = JSON.parse(sesi);
+                initDashboard();
+            }
+        }
+
+        function initDashboard() {
+            document.getElementById('sectionLogin').classList.add('hide');
+            document.getElementById('wrapper').classList.remove('hide');
+            document.getElementById('navNama').innerText = currentUser.nama;
+            document.getElementById('navNim').innerText = currentUser.nim;
+            loadRiwayat();
+        }
+
+        function logout() {
+            localStorage.removeItem('sesi_mahasiswa');
+            location.reload();
+        }
+
+        // --- LOGIN ---
+        document.getElementById('formLogin').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await apiRequest({
+                action: 'login',
+                nim: document.getElementById('nim').value,
+                password: document.getElementById('pass').value
+            });
+
+            if (res && res.status === 'success') {
+                currentUser = res.data;
+                localStorage.setItem('sesi_mahasiswa', JSON.stringify(currentUser));
+                initDashboard();
+            } else {
+                alert(res ? res.pesan : "Error");
+            }
+        });
+
+        // --- GANTI PASSWORD ---
+        window.bukaModalPassword = function () {
+            document.getElementById('formGantiPass').reset();
+            document.getElementById('msgPass').innerText = '';
+            modalPassInstance.show();
+        }
+
+        document.getElementById('formGantiPass').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const oldPass = document.getElementById('oldPassInput').value;
+            const newPass = document.getElementById('newPassInput').value;
+            const confPass = document.getElementById('confPassInput').value;
+
+            if (newPass !== confPass) { document.getElementById('msgPass').innerText = "Password tidak cocok!"; return; }
+
+            const res = await apiRequest({
+                action: 'gantiPassword', nim: currentUser.nim, oldPass: oldPass, newPass: newPass
+            });
+
+            if (res && res.status === 'success') {
+                alert("✅ Password berhasil diubah! Login ulang.");
+                modalPassInstance.hide();
+                logout();
+            } else {
+                alert("Gagal: " + (res ? res.pesan : "Error"));
+            }
+        });
+
+        // --- INPUT BIMBINGAN ---
+        document.getElementById('formInput').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const fileInput = document.getElementById('fileUpload');
+            let fileData = "", fileName = "", mimeType = "";
+
+            if (fileInput.files.length > 0) {
+                const file = fileInput.files[0];
+                if (file.size > 2 * 1024 * 1024) { alert("File maks 2MB!"); return; }
+                fileName = file.name; mimeType = file.type;
+                try { fileData = await fileToBase64(file); } catch (err) { alert("Gagal baca file"); return; }
+            }
+
+            const payload = {
+                action: 'simpan',
+                nim: currentUser.nim,
+                nama: currentUser.nama,
+                // Di sini kita ambil value dari dropdown (Select Option)
+                topik: document.getElementById('topik').value,
+                catatan: document.getElementById('catatan').value,
+                fileData: fileData, fileName: fileName, mimeType: mimeType
+            };
+
+            const res = await apiRequest(payload);
+            if (res && res.status === 'success') {
+                alert("Terkirim!");
+                // Reset form manual agar dropdown kembali ke awal
+                document.getElementById('formInput').reset();
+                loadRiwayat();
+            } else { alert("Gagal: " + res.pesan); }
+        });
+
+        // --- LOAD RIWAYAT ---
+        async function loadRiwayat() {
+            const tbody = document.getElementById('tabelBody');
+            tbody.innerHTML = '<tr><td colspan="5" class="text-center py-3">Loading...</td></tr>';
+            const res = await apiRequest({ action: 'ambilRiwayat', nim: currentUser.nim });
+
+            tbody.innerHTML = '';
+            if (res && res.status === 'success' && res.data.length > 0) {
+                document.getElementById('statTotal').innerText = res.data.length;
+                document.getElementById('statStatus').innerText = res.data[0].status;
+
+                res.data.forEach(item => {
+                    let badge = item.status === 'ACC' ? 'bg-success' : (item.status === 'Revisi' ? 'bg-danger' : 'bg-warning text-dark');
+                    let fileLink = (item.linkFile && item.linkFile !== '-')
+                        ? `<a href="${item.linkFile}" target="_blank" class="text-primary"><i class="fas fa-file-pdf"></i></a>` : '-';
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${item.waktu}</td>
+                            <td><span class="fw-bold d-block text-primary">${item.topik}</span><small class="text-muted">${item.catatan}</small></td>
+                            <td class="text-center">${fileLink}</td>
+                            <td>${item.balasan === '-' ? '<span class="text-muted fst-italic">Belum ada</span>' : item.balasan}</td>
+                            <td><span class="badge ${badge}">${item.status}</span></td>
+                        </tr>`;
+                });
+            } else {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center py-3 text-muted">Belum ada riwayat bimbingan</td></tr>';
+            }
+        }
+
+        // --- UTILS ---
+        const fileToBase64 = file => new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result.split(',')[1]);
+            reader.onerror = error => reject(error);
+        });
+
+        async function apiRequest(payload) {
+            showLoading(true);
+            try {
+                const r = await fetch(SCRIPT_URL, { method: "POST", body: JSON.stringify(payload) });
+                const d = await r.json();
+                showLoading(false); return d;
+            } catch (e) { showLoading(false); return null; }
+        }
+
+        function showLoading(show) { document.getElementById('loader').style.display = show ? 'flex' : 'none'; }
+    </script>
+</body>
+
+</html>
