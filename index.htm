@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dede Irawan, S.Kom., M.Kom. — Portal Pribadi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+        }
+
+        :root {
+            --biru-utama: #003366;
+            --biru-terang: #0052CC;
+            --biru-muda: #E6F0FF;
+            --emas: #D4A017;
+            --abu-terang: #F5F7FA;
+            --abu-teks: #4A5568;
+            --hitam-lembut: #1A202C;
+            --putih: #FFFFFF;
+            --batas: #E2E8F0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--hitam-lembut);
+            background: #FFFFFF;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .wadah {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* === BAR INFORMASI ATAS === */
+        .bar-atas {
+            background: var(--biru-utama);
+            color: var(--putih);
+            font-size: 0.85rem;
+            padding: 0.5rem 0;
+        }
+
+        .bar-atas .isi {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .bar-atas-kanan a {
+            color: #BFD7FF;
+            margin-left: 1rem;
+            transition: color 0.2s;
+        }
+
+        .bar-atas-kanan a:hover {
+            color: #fff;
+        }
+
+        /* === KEPALA SITUS / LOGO === */
+        .kepala-situs {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--batas);
+        }
+
+        .kepala-situs .wadah {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+        }
+
+        .nama-situs h1 {
+            font-size: 1.25rem;
+            color: var(--biru-utama);
+            line-height: 1.4;
+        }
+
+        .nama-situs p {
+            font-size: 0.9rem;
+            color: var(--abu-teks);
+        }
+
+        /* === MENU NAVIGASI UTAMA — RESPONSIF === */
+        .nav-utama {
+            background: var(--biru-utama);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .tombol-menu {
+            display: none;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            padding: 0.8rem 1rem;
+            cursor: pointer;
+        }
+
+        .daftar-menu {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .daftar-menu.tampil {
+            display: flex;
+        }
+
+        .daftar-menu li {
+            width: auto;
+        }
+
+        .daftar-menu a {
+            display: block;
+            padding: 0.9rem 1rem;
+            color: var(--putih);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.25s ease;
+        }
+
+        .daftar-menu a:hover,
+        .daftar-menu a.aktif {
+            background: var(--biru-terang);
+            border-bottom-color: var(--emas);
+        }
+
+        @media (max-width: 768px) {
+            .tombol-menu {
+                display: block;
+            }
+
+            .daftar-menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .daftar-menu li {
+                width: 100%;
+            }
+
+            .daftar-menu a {
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+
+            .daftar-menu a:hover,
+            .daftar-menu a.aktif {
+                border-bottom: none;
+                border-left-color: var(--emas);
+                background: rgba(255, 255, 255, 0.1);
+            }
+        }
+
+        /* === BANNER === */
+        .banner {
+            background: linear-gradient(135deg, var(--biru-utama) 0%, var(--biru-terang) 100%);
+            color: #fff;
+            padding: 3rem 0;
+        }
+
+        .banner .isi {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .foto-profil {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            object-fit: cover;
+            background: #fff;
+        }
+
+        .teks-banner h2 {
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .teks-banner p {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.2rem;
+            max-width: 600px;
+        }
+
+        .tombol {
+            display: inline-block;
+            padding: 0.7rem 1.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tombol.utama {
+            background: var(--emas);
+            color: #000;
+        }
+
+        .tombol.utama:hover {
+            background: #E5B000;
+            transform: translateY(-2px);
+        }
+
+        .tombol.batas {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #fff;
+            margin-left: 0.5rem;
+        }
+
+        .tombol.batas:hover {
+            background: #fff;
+            color: var(--biru-utama);
+        }
+
+        /* === KONTEN === */
+        .bungkus-konten {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 290px;
+            gap: 2rem;
+            padding: 2rem 20px 3rem;
+            align-items: start;
+        }
+
+        .konten-pokok {
+            min-width: 0;
+        }
+
+        .konten-pokok .wadah {
+            max-width: none;
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        .sidebar {
+            min-width: 0;
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar .kotak {
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 51, 102, 0.08);
+        }
+
+        .sidebar .kotak h3 {
+            padding-bottom: 0.65rem;
+            border-bottom: 2px solid rgba(212, 160, 23, 0.65);
+        }
+
+        @media (max-width: 900px) {
+            .bungkus-konten {
+                grid-template-columns: minmax(0, 1fr) 250px;
+                gap: 1.25rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .bungkus-konten {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+
+        .judul-bagian {
+            font-size: 1.4rem;
+            color: var(--biru-utama);
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--emas);
+            display: inline-block;
+        }
+
+        .kotak {
+            background: var(--putih);
+            border: 1px solid var(--batas);
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: box-shadow 0.25s ease;
+        }
+
+        .kotak:hover {
+            box-shadow: 0 3px 10px rgba(0, 51, 102, 0.08);
+        }
+
+        .kotak h3 {
+            color: var(--biru-utama);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .kotak-pengumuman {
+            background: var(--biru-muda);
+            border-left: 4px solid var(--emas);
+            padding: 1rem 1.2rem;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .daftar-samping {
+            list-style: none;
+        }
+
+        .daftar-samping li {
+            border-bottom: 1px solid var(--batas);
+        }
+
+        .daftar-samping a {
+            display: block;
+            padding: 0.7rem 0;
+            color: var(--biru-terang);
+            border-left: 3px solid transparent;
+            padding-left: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .daftar-samping a:hover {
+            border-left-color: var(--emas);
+            background: var(--biru-muda);
+            padding-left: 1rem;
+        }
+
+        .jadwal-harian {
+            margin-bottom: 1.5rem;
+        }
+
+        .jadwal-harian:last-child {
+            margin-bottom: 0;
+        }
+
+        .jadwal-harian h4 {
+            margin-bottom: 0.5rem;
+            color: var(--biru-utama);
+        }
+
+        .tabel-jadwal-wrapper {
+            overflow-x: auto;
+        }
+
+        .tabel-jadwal {
+            width: 100%;
+            min-width: 700px;
+            border-collapse: collapse;
+            border-bottom: 3px solid var(--biru-utama);
+            font-size: 0.9rem;
+        }
+
+        .tabel-jadwal th,
+        .tabel-jadwal td {
+            padding: 0.45rem 0.6rem;
+            border: 1px solid var(--batas);
+            text-align: left;
+        }
+
+        .tabel-jadwal th {
+            background: var(--biru-utama);
+            color: var(--putih);
+            text-align: center;
+        }
+
+        .tabel-jadwal tbody tr:nth-child(odd) {
+            background: var(--abu-terang);
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+            scroll-margin-top: 70px;
+        }
+
+        /* === KAKI HALAMAN === */
+        footer {
+            background: var(--biru-utama);
+            color: #BFD7FF;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        footer h4 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: #BFD7FF;
+            transition: color 0.2s;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        .grid-kaki {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .bawah-kaki {
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding-top: 1.5rem;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- BAR INFORMASI ATAS -->
+    <div class="bar-atas">
+        <div class="wadah isi">
+            <span>🏛️ Portal Pribadi — Universitas Kuningan</span>
+            <div class="bar-atas-kanan">
+                <a href="mailto:dede.irawan@uniku.ac.id">📧 Email</a>
+                <a href="https://uniku.ac.id" target="_blank">🌐 Situs Resmi</a>
+                <a href="#kontak">📞 Kontak</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEPALA SITUS / LOGO -->
+    <header class="kepala-situs">
+        <div class="wadah">
+            <div class="logo">
+                <img src="https://fkom.uniku.ac.id/wp-content/uploads/2021/08/fkom-transparan-biru.png"
+                    alt="Logo Uniku">
+                <div class="nama-situs">
+                    <h1>Dede Irawan, S.Kom., M.Kom.</h1>
+                    <p>Dosen · Program Studi Sistem Informasi · Universitas Kuningan</p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MENU NAVIGASI UTAMA — DIPERBAIKI & RESPONSIF -->
+    <nav class="nav-utama">
+        <div class="wadah">
+            <button class="tombol-menu" id="tombolMenu" aria-label="Buka/tutup menu">
+                ☰
+            </button>
+            <ul class="daftar-menu" id="daftarMenu">
+                <li><a href="#beranda" class="aktif">Beranda</a></li>
+                <li><a href="#profil">Profil</a></li>
+                <li><a href="#akademik">Akademik</a></li>
+                <li><a href="#penelitian">Penelitian</a></li>
+                <li><a href="#pengabdian">Pengabdian</a></li>
+                <li><a href="#kontak">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="wadah bungkus-konten">
+        <main class="konten-pokok">
+            
+            <!-- BAGIAN: BERANDA -->
+            <section id="beranda">
+                <div class="banner">
+                    <div class="wadah isi">
+                        <img style="margin-left: auto;"
+                            src="https://uniku.ac.id/wp-content/uploads/2024/11/Dede-Irawan-S.Kom_.-M.Kom_-scaled-e1770867433237.jpg"
+                            alt="Foto Profil Dede Irawan" class="foto-profil"
+                            onerror="this.src='https://via.placeholder.com/160x160/E6F0FF/003366?text=DI';this.alt='Foto Dede Irawan'">
+                        <div class="teks-banner">
+                            <h2>Assalamu’alaikum — Selamat Datang!</h2>
+                            <p>Laman resmi untuk kegiatan akademik, materi pembelajaran, hasil penelitian, serta
+                                pengabdian
+                                kepada masyarakat. Universitas Kuningan: <em>Mendampingi, Melayani, Memberikan yang
+                                    Terbaik</em>.</p>
+                            <a href="#profil" class="tombol utama">Lihat Profil Lengkap</a>
+                            <a href="#akademik" class="tombol batas">Materi Kuliah</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="wadah">
+                    <div class="kotak-pengumuman">
+                        <strong>📢 Pengumuman Penting</strong>
+                        <p style="margin-top: 0.3rem;">Jadwal Ujian Tengah Semester & panduan pengumpulan tugas akhir
+                            telah
+                            diperbarui. Batas pengumpulan: <strong>15 November 2026</strong>.</p>
+                    </div>
+                </div> -->
+            </section>
+
+            <!-- BAGIAN: PROFIL -->
+            <section id="profil">
+                <div class="wadah">
+                    <h2 class="judul-bagian">Tentang Saya</h2>
+                    <div class="kotak">
+                        <p style="margin-bottom: 1rem;">Saya adalah dosen tetap Program Studi Sistem Informasi, Fakultas
+                            Ilmu Komputer, Universitas Kuningan. Bergabung sejak tahun 2006, mengajar mata kuliah di
+                            bidang
+                            Sistem Informasi, Pemrograman Web, serta meneliti penerapan Teknologi Informasi dibidang
+                            Pendidikan, UMKM, Kesehatan dan Pertanian.</p>
+                        <p style="margin-bottom: 1rem;">Laman ini dikelola secara mandiri guna memudahkan akses
+                            informasi
+                            akademik bagi mahasiswa, rekan sejawat, serta masyarakat luas — mencerminkan semangat
+                            pelayanan
+                            institusi: <em>Mendampingi, Melayani, Memberikan yang Terbaik</em>.</p>
+
+                        <h3 style="margin-top: 1.5rem;">Riwayat Pendidikan</h3>
+                        <ul style="list-style: none; margin-top: 1rem;">
+                            <li style="padding: 0.8rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>2013 — Magister Komputer</strong><br>
+                                STMIK Likmi
+                            </li>
+                            <li style="padding: 0.8rem 0;">
+                                <strong>2006 — Sarjana Komputer</strong><br>
+                                Universitas Kuningan
+                            </li>
+                            <li style="padding: 0.8rem 0;">
+                                <strong>1998 — Sekolah Menengah Umum (IPS)</strong><br>
+                                SMUN 3 Kuningan
+                            </li>
+                            <li style="padding: 0.8rem 0;">
+                                <strong>1995 — Sekolah Menengah Pertama</strong><br>
+                                MTs Negeri Darma
+                            </li>
+                            <li style="padding: 0.8rem 0;">
+                                <strong>1992 — Sekolah Dasar</strong><br>
+                                SD Negeri 2 Darma
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            
+            <!-- BAGIAN: AKADEMIK & PENGAJARAN -->
+            <section id="akademik">
+                <div class="wadah">
+                    <h2 class="judul-bagian">Akademik & Pengajaran</h2>
+
+                    <div class="kotak">
+                        <h3>Jadwal Kuliah</h3>
+
+                        <div class="jadwal-harian">
+                            <h4>Senin</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10:30</td>
+                                            <td>12:05</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW241909 - Web Desain (25-03)</td>
+                                            <td>FKOM-Ruang C</td>
+                                        </tr>
+                                        <tr>
+                                            <td>14:40</td>
+                                            <td>16:15</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW241909 - Web Desain (25-03)</td>
+                                            <td>FKOM-Lab. Multimedia</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="jadwal-harian">
+                            <h4>Selasa</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>18:30</td>
+                                            <td>20:05</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW2124 - Praktikum Pemrograman Web 2 (22-02)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                        <tr>
+                                            <td>20:10</td>
+                                            <td>21:45</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW2126 - Praktikum Pemrograman 1 (22-01)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="jadwal-harian">
+                            <h4>Kamis</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>08:00</td>
+                                            <td>09:35</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW241909 - Web Desain (25-02)</td>
+                                            <td>FKOM-Lab. RPL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>13:00</td>
+                                            <td>14:35</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW241909 - Web Desain (25-02)</td>
+                                            <td>FKOM-Ruang C</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16:20</td>
+                                            <td>17:55</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW241909 - Web Desain (25-01)</td>
+                                            <td>FKOM-Lab. Pemrograman</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="jadwal-harian">
+                            <h4>Jumat</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>13:00</td>
+                                            <td>14:35</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW241609 - Pemrograman Dasar (25-03)</td>
+                                            <td>FKOM-Ruang O</td>
+                                        </tr>
+                                        <tr>
+                                            <td>14:40</td>
+                                            <td>16:15</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW241909 - Web Desain (25-01)</td>
+                                            <td>FKOM-Ruang P</td>
+                                        </tr>
+                                        <tr>
+                                            <td>16:20</td>
+                                            <td>17:55</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW241609 - Pemrograman Dasar (25-03)</td>
+                                            <td>FKOM-Lab. Pemrograman</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="jadwal-harian">
+                            <h4>Sabtu</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>09:35</td>
+                                            <td>11:20</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW1924 - Praktikum Pemrograman Web 2 (20-01)</td>
+                                            <td>FKOM-Lab. RPL</td>
+                                        </tr>
+                                        <tr>
+                                            <td>11:20</td>
+                                            <td>13:45</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW2123 - Pemrograman Web 2 (22-01)</td>
+                                            <td>FKOM-Ruang C</td>
+                                        </tr>
+                                        <tr>
+                                            <td>13:50</td>
+                                            <td>15:15</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW241909 - Web Desain (24-03)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                        <tr>
+                                            <td>19:20</td>
+                                            <td>20:55</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW1915 - Pemrograman Web 1 (20-01)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                        <tr>
+                                            <td>22:35</td>
+                                            <td>23:40</td>
+                                            <td>Praktikum</td>
+                                            <td>SINFCW2116 - Praktikum Pemrograman Web 1 (22-01)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="jadwal-harian">
+                            <h4>Minggu</h4>
+                            <div class="tabel-jadwal-wrapper">
+                                <table class="tabel-jadwal">
+                                    <thead>
+                                        <tr>
+                                            <th>Mulai</th>
+                                            <th>Selesai</th>
+                                            <th>Jenis</th>
+                                            <th>Kelas Mata Kuliah</th>
+                                            <th>Ruang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>10:00</td>
+                                            <td>12:00</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW1923 - Pemrograman Web 2 (20-03)</td>
+                                            <td>Online</td>
+                                        </tr>
+                                        <tr>
+                                            <td>18:30</td>
+                                            <td>20:05</td>
+                                            <td>Kuliah</td>
+                                            <td>SINFCW2115 - Pemrograman Web 1 (22-01)</td>
+                                            <td>FKOM-Ruang D</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <!-- BAGIAN: PENELITIAN & PUBLIKASI -->
+            <section id="penelitian">
+                <div class="wadah">
+                    <h2 class="judul-bagian">Penelitian & Publikasi</h2>
+                    <div class="kotak">
+                        <h3>Daftar Publikasi Ilmiah</h3>
+                        <!-- <ul style="list-style: none; margin-top: 1rem;">
+                            <li style="padding: 0.9rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>Penerapan Kerangka Kerja Ward & Peppard pada Analisis Sistem Informasi Perguruan
+                                    Tinggi</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Jurnal Sistem Informasi
+                                    Indonesia ·
+                                    2026</span><br>
+                                <a href="#"
+                                    style="color: var(--biru-terang); font-size: 0.9rem; display: inline-block; margin-top: 0.3rem;">→
+                                    Baca / Unduh</a>
+                            </li>
+                            <li style="padding: 0.9rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>Pembelajaran Berbasis OBE pada Mata Kuliah Pemrograman Web: Analisis Penerapan &
+                                    Dampak</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Prosiding Seminar Nasional
+                                    Pendidikan
+                                    Vokasi · 2025</span><br>
+                                <a href="#"
+                                    style="color: var(--biru-terang); font-size: 0.9rem; display: inline-block; margin-top: 0.3rem;">→
+                                    Baca / Unduh</a>
+                            </li>
+                            <li style="padding: 0.9rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>Analisis PESTLE Kebijakan Transformasi Kesehatan Digital di
+                                    Indonesia</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Jurnal Kebijakan Kesehatan
+                                    Indonesia ·
+                                    2024</span><br>
+                                <a href="#"
+                                    style="color: var(--biru-terang); font-size: 0.9rem; display: inline-block; margin-top: 0.3rem;">→
+                                    Baca / Unduh</a>
+                            </li>
+                            <li style="padding: 0.9rem 0;">
+                                <strong>Penerapan Metode Pengembangan Sistem Berorientasi Objek pada Layanan
+                                    Administrasi
+                                    Desa</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Jurnal Ilmiah Teknologi
+                                    Informasi ·
+                                    2023</span><br>
+                                <a href="#"
+                                    style="color: var(--biru-terang); font-size: 0.9rem; display: inline-block; margin-top: 0.3rem;">→
+                                    Baca / Unduh</a>
+                            </li>
+                        </ul> -->
+
+                        <h3 style="margin-top: 1.8rem;">Profil Ilmiah</h3>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem;">
+                            <a href="https://scholar.google.com/citations?hl=en&user=7rTTy0kAAAAJ" target="_blank"
+                                class="tombol"
+                                style="background: var(--biru-muda); color: var(--biru-utama); padding: 0.6rem 1.2rem; font-size: 0.9rem;">📚
+                                Google Scholar</a>
+                            <a href="https://sinta.kemdiktisaintek.go.id/authors/profile/6011622" target="_blank"
+                                class="tombol"
+                                style="background: var(--biru-muda); color: var(--biru-utama); padding: 0.6rem 1.2rem; font-size: 0.9rem;">🏆
+                                SINTA — Dikti</a>
+                            <a href="#" class="tombol"
+                                style="background: var(--biru-muda); color: var(--biru-utama); padding: 0.6rem 1.2rem; font-size: 0.9rem;">🔬
+                                ORCID</a>
+                            <a href="#" class="tombol"
+                                style="background: var(--biru-muda); color: var(--biru-utama); padding: 0.6rem 1.2rem; font-size: 0.9rem;">📄
+                                Scopus</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAGIAN: PENGABDIAN KEPADA MASYARAKAT -->
+            <section id="pengabdian">
+                <div class="wadah">
+                    <h2 class="judul-bagian">Pengabdian kepada Masyarakat</h2>
+                    <div class="kotak">
+                        <!-- <ul style="list-style: none; margin-top: 1rem;">
+                            <li style="padding: 0.9rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>Pelatihan Literasi Digital bagi Pengurus Desa — Desa Sukamaju,
+                                    Cirebon</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Agustus 2026 · <span
+                                        style="background: var(--emas); color: #000; padding: 0.15rem 0.6rem; border-radius: 12px; font-weight: 600;">Selesai</span></span><br>
+                                <p style="margin-top: 0.5rem;">Memberikan pelatihan komputer dasar, pengelolaan data
+                                    warga,
+                                    serta pemanfaatan aplikasi perkantoran.</p>
+                            </li>
+                            <li style="padding: 0.9rem 0; border-bottom: 1px solid var(--batas);">
+                                <strong>Pendampingan Digitalisasi Pencatatan Usaha Mikro — Koperasi
+                                    Se-Kuningan</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Juli–Desember 2026 · <span
+                                        style="background: #10B981; color: #fff; padding: 0.15rem 0.6rem; border-radius: 12px; font-weight: 600;">Berjalan</span></span><br>
+                                <p style="margin-top: 0.5rem;">Membantu merancang sistem pencatatan penjualan berbasis
+                                    web agar
+                                    pelaku usaha memantau keuangan secara rapi dan akuntabel.</p>
+                            </li>
+                            <li style="padding: 0.9rem 0;">
+                                <strong>Penyuluhan Keamanan Data Pribadi bagi Pelaku Usaha Kecil</strong><br>
+                                <span style="color: var(--abu-teks); font-size: 0.9rem;">Maret 2026 · <span
+                                        style="background: var(--emas); color: #000; padding: 0.15rem 0.6rem; border-radius: 12px; font-weight: 600;">Selesai</span></span><br>
+                                <p style="margin-top: 0.5rem;">Meningkatkan kesadaran perlindungan data dan pencegahan
+                                    kebocoran
+                                    informasi bagi pelaku usaha mikro.</p>
+                            </li>
+                        </ul> -->
+                    </div>
+                </div>
+            </section>
+
+            
+            <!-- BAGIAN: KONTAK -->
+            <section id="kontak">
+                <div class="wadah">
+                    <h2 class="judul-bagian">Hubungi Saya</h2>
+                    <div class="kotak">
+                        <div
+                            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.8rem;">
+                            <div>
+                                <h3>📧 Email</h3>
+                                <p style="font-size: 0.95rem;">
+                                    <a href="mailto:dede.irawan@uniku.ac.id"
+                                        style="color: var(--biru-terang); font-weight: 500;">dede.irawan@uniku.ac.id</a>
+                                </p>
+
+                                <h3 style="margin-top: 1.5rem;">📞 Telepon / WhatsApp</h3>
+                                <p style="font-size: 0.95rem;">+62 xxx-xxxx-xxxx</p>
+
+                                <h3 style="margin-top: 1.5rem;">🕐 Jam Kerja</h3>
+                                <p style="font-size: 0.95rem;">Senin–Jumat<br>08.00–16.00 WIB</p>
+                            </div>
+                            <div>
+                                <h3>📍 Alamat Kantor</h3>
+                                <p style="font-size: 0.95rem;">
+                                    Gedung C — Lantai 2, Ruang Dosen<br>
+                                    Universitas Kuningan — Kampus 2<br>
+                                    Jl. Pramuka No. 67, Purwawinangun<br>
+                                    Kuningan, Jawa Barat — 45512
+                                </p>
+                                <p style="font-size: 0.85rem; color: var(--abu-teks); margin-top: 1rem;">
+                                    <strong>Kampus 1:</strong> Jl. Cut Nyak Dhien No. 36A, Cijoho, Kuningan — 45513
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <aside class="sidebar">
+            <div class="kotak">
+                <h3>🔗 Tautan Cepat</h3>
+                <ul class="daftar-samping">
+                    <li><a href="https://uniku.ac.id" target="_blank">Situs Resmi Uniku</a></li>
+                    <li><a href="https://siakad.uniku.ac.id/gate/login" target="_blank">Portal Akademik</a></li>
+                    <li><a href="https://edlink.id/">E-Learning</a></li>
+                    <li><a href="https://lib.uniku.ac.id" target="_blank">Perpustakaan</a></li>
+                    <li><a href="https://sinta.kemdiktisaintek.go.id/" target="_blank">SINTA — Dikti</a></li>
+                    <li><a href="https://unikudede.github.io" target="_blank">Bimbingan KP & Skripsi</a></li>
+                </ul>
+            </div>
+
+            <div class="kotak" style="background: var(--biru-muda);">
+                <h3>📅 Jadwal Bimbingan</h3>
+                <p style="margin-bottom: 0.5rem;"><strong>Selasa & Rabu</strong><br>09.00 – 15.00 WIB</p>
+                <p style="font-size: 0.9rem; color: var(--abu-teks); margin-bottom: 1rem;">
+                    Gedung C — Lantai 2<br>
+                    Buat janji temu lewat WhatsApp.
+                </p>
+                <a href="#kontak" class="tombol utama" style="width: 100%; text-align: center;">📧 Hubungi</a>
+            </div>
+
+            <div class="kotak">
+                <h3>🏛️ Tentang Uniku</h3>
+                <p style="font-size: 0.9rem; color: var(--abu-teks);">
+                    Universitas Kuningan — Unggul, Berkarakter, Beradab. Berkomitmen menghasilkan lulusan yang berilmu,
+                    berakhlak, dan bermanfaat bagi bangsa.
+                </p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- KAKI HALAMAN -->
+    <footer>
+        <div class="wadah">
+            <div class="grid-kaki">
+                <div>
+                    <h4>Tentang Laman</h4>
+                    <p style="font-size: 0.9rem; line-height: 1.7;">
+                        Laman pribadi dosen Universitas Kuningan — sarana penyebaran informasi akademik, materi
+                        pembelajaran, hasil penelitian, serta kegiatan pengabdian kepada masyarakat.
+                    </p>
+                </div>
+                <div>
+                    <h4>Tautan Resmi</h4>
+                    <ul>
+                        <li style="margin-bottom: 0.5rem;"><a href="https://uniku.ac.id" target="_blank">→ Website Utama
+                                Uniku</a></li>
+                        <li style="margin-bottom: 0.5rem;"><a href="https://fkom.uniku.ac.id/id/" target="_blank">→
+                                Fakultas Ilmu Komputer</a></li>
+                        <li><a href="#">→ Program Studi Sistem Informasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Kontak Kampus</h4>
+                    <p style="font-size: 0.9rem;">
+                        📍 Kampus 1: Jl. Cut Nyak Dhien No.36A, Cijoho — 45513<br>
+                        📍 Kampus 2: Jl. Pramuka No.67, Purwawinangun — 45512<br>
+                        📧 info@uniku.ac.id
+                    </p>
+                </div>
+            </div>
+            <div class="bawah-kaki">
+                <p style="margin-bottom: 0.5rem; font-style: italic;">"Mendampingi, Melayani, Memberikan yang Terbaik" —
+                    Semangat Pelayanan Universitas Kuningan</p>
+                <p>&copy; 2026 Dede Irawan, S.Kom., M.Kom. — Universitas Kuningan. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SKRIP: Menu Responsif & Tanda Aktif Otomatis -->
+    <script>
+        // Tampil/sembunyikan menu di layar HP
+        const tombolMenu = document.getElementById('tombolMenu');
+        const daftarMenu = document.getElementById('daftarMenu');
+
+        tombolMenu.addEventListener('click', () => {
+            daftarMenu.classList.toggle('tampil');
+        });
+
+        // Tutup menu setelah diklik di HP
+        const tautanMenu = daftarMenu.querySelectorAll('a');
+        tautanMenu.forEach(tautan => {
+            tautan.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    daftarMenu.classList.remove('tampil');
+                }
+                tautanMenu.forEach(t => t.classList.remove('aktif'));
+                tautan.classList.add('aktif');
+            });
+        });
+
+        // Tandai menu aktif saat digulir
+        const bagian = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            const posisiGulir = window.scrollY + 150;
+            let bagianSekarang = '';
+
+            bagian.forEach(b => {
+                const atas = b.offsetTop;
+                const tinggi = b.offsetHeight;
+                if (posisiGulir >= atas && posisiGulir < atas + tinggi) {
+                    bagianSekarang = b.getAttribute('id');
+                }
+            });
+
+            tautanMenu.forEach(tautan => {
+                tautan.classList.remove('aktif');
+                if (tautan.getAttribute('href') === `#${bagianSekarang}`) {
+                    tautan.classList.add('aktif');
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>
